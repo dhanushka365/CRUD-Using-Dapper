@@ -1,7 +1,11 @@
-﻿namespace CRUD_Using_Dapper.Models
+﻿using CRUD_Using_Dapper.Common;
+
+namespace CRUD_Using_Dapper.Models
 {
     public class Student
     {
+        internal OperationType OperationType;
+
         public int StudentId { get; set; }
 
         public string? Name { get; set; }
