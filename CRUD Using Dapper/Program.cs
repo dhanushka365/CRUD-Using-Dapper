@@ -1,8 +1,16 @@
+using CRUD_Using_Dapper.Common;
+using Microsoft.Extensions.Configuration;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
 builder.Services.AddControllers();
+
+// Add IConfiguration to the services
+builder.Services.AddSingleton<IConfiguration>(builder.Configuration);
+Global.ConnectionString = builder.Configuration.GetConnectionString("StudentDB");
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
