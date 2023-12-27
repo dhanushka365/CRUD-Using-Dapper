@@ -34,7 +34,7 @@ namespace CRUD_Using_Dapper.Controllers
             
         }
         [HttpDelete("{studentId}")]
-        public string Delete(int studentId)
+        public Student Delete(int studentId)
         {
             return _studentService.Delete(studentId);
             

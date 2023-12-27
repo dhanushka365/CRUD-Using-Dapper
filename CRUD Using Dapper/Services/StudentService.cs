@@ -64,9 +64,12 @@ namespace CRUD_Using_Dapper.Services
                 {
                     if(con.State == ConnectionState.Closed) con.Open();
                     
-                    _students = con.Query<Student>("SP_Student",
-                                               this.SetParameters(new Student(), Convert.ToInt32(OperationType.None)),
-                                                                      commandType: CommandType.StoredProcedure).ToList();
+                    var students = con.Query<Student>("SELECT * FROM Student").ToList();
+
+                    if (students != null && students.Count() > 0)
+                    {
+                        _students = students;
+                    }
                 }
             }
             catch(Exception ex)
@@ -87,13 +90,11 @@ namespace CRUD_Using_Dapper.Services
                 {
                     if(con.State == ConnectionState.Closed) con.Open();
                     
-                    var students = con.Query<Student>("SP_Student",
-                                  this.SetParameters(new Student { StudentId = studentId }, Convert.ToInt32(OperationType.None)),
-                                                                 commandType: CommandType.StoredProcedure);
+                    var student = con.Query<Student>("SELECT * FROM Student WHERE studentId ="+studentId).ToList();
 
-                    if (students != null && students.Count() > 0)
+                    if (student != null && student.Count() > 0)
                     {
-                        _student = students.FirstOrDefault();
+                        _student = student.SingleOrDefault();
                     }
                 }
             }
@@ -106,7 +107,7 @@ namespace CRUD_Using_Dapper.Services
          
         }
 
-        public String Delete(int studentId)
+        public Student Delete(int studentId)
         {
             String message = String.Empty;
             try
@@ -130,7 +131,7 @@ namespace CRUD_Using_Dapper.Services
                 _student.Message = ex.Message;
             }
 
-            return _student.Message;
+            return _student;
         
         }   
     }

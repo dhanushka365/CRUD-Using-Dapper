@@ -10,6 +10,6 @@ namespace CRUD_Using_Dapper.IService
 
         Student Get(int studentId);
 
-        String Delete(int studentId);
+        Student Delete(int studentId);
     }
 }
